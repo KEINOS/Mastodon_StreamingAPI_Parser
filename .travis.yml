@@ -1,0 +1,33 @@
+language: php
+
+env:
+  global:
+  - PHAN_DISABLE_XDEBUG_WARN=1
+
+install: /bin/bash ./.init/setup-composer.sh --dev && sudo snap install tree
+
+matrix:
+  include:
+    # PHP 7.0 support deprecated. phpstan/extension-installer supports only ^7.1
+    #- php: 7.0
+    #  dist: xenial
+    - php: 7.1
+      dist: bionic
+    # Default PHP version in macOS HighSierra(10.13.6) and Mojave(10.14.4)
+    - php: 7.1.23
+      dist: xenial
+    - php: 7.2
+      dist: bionic
+    - php: 7.3
+      dist: bionic
+    - php: 7.4
+      dist: bionic
+    - php: nightly
+      dist: bionic
+  allow_failures:
+    - php: nightly
+
+script:
+  - /bin/bash ./tests/run-tests.sh local all
+  - php ./.init/initialize_package.php MyVendorName
+  - /bin/bash ./tests/run-tests.sh local all

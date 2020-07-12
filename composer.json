@@ -1,0 +1,82 @@
+{
+    "name": "keinos/mastodon-streaming-api-parser",
+    "description": "Parses the Mastodon Streaming API server-sent events to JSON.",
+    "homepage": "https://github.com/KEINOS/Mastodon_StreamingAPI_Parser",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KEINOS",
+            "email": "github@keinos.com",
+            "homepage": "https://github.com/KEINOS/",
+            "role": "Maintainer"
+        },
+        {
+            "name": "contributors",
+            "homepage": "https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/graphs/contributors",
+            "role": "Contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/issues",
+        "source": "https://github.com/KEINOS/Mastodon_StreamingAPI_Parser"
+    },
+    "require": {
+        "php": "^8.0 || ^7.1",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.3",
+        "phan/phan": "^2.5",
+        "php-coveralls/php-coveralls": "^2.2",
+        "phpbench/phpbench": "@dev",
+        "phpmd/phpmd": "@stable",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.12.10",
+        "phpunit/phpunit": "^9.0 || ^8.0 || ^7.0 || ^6.5",
+        "psalm/phar": "^3.9",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.3"
+        }
+    },
+    "extra": {
+        "bamarni-bin": {
+            "target-directory": "tools"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "KEINOS\\MSTDN_TOOLS\\": [
+                "src",
+                "src/interfaces"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KEINOS\\Tests\\": [
+                "tests",
+                "tests/conf"
+            ]
+        }
+    },
+    "scripts" :{
+        "test": [
+            "./tests/run-tests.sh"
+        ],
+        "bench": [
+            "./vendor/bin/phpbench run --report=aggregate --report=compare ./bench"
+        ],
+        "compile": [
+            "box compile --config=./.init/box.json"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "docker-compose run --rm --entrypoint='/bin/sh' --workdir='/app' -v $(pwd):/app dev < /dev/tty"
+        ]
+    }
+}
