@@ -1,3 +1,8 @@
+[![](https://travis-ci.org/KEINOS/Mastodon_StreamingAPI_Parser.svg?branch=master)](https://travis-ci.org/KEINOS/Mastodon_StreamingAPI_Parser "View Build Status on Travis")
+[![](https://coveralls.io/repos/github/Mastodon_StreamingAPI_Parser/badge.svg)](https://coveralls.io/github/Mastodon_StreamingAPI_Parser "Coverage Status")
+[![](https://img.shields.io/scrutinizer/quality/g/Mastodon_StreamingAPI_Parser/master)](https://scrutinizer-ci.com/g/KEINOS/Mastodon_StreamingAPI_Parser/master "Scrutinizer code quality")
+[![](https://img.shields.io/packagist/php-v/keinos/mastodon-streaming-api-parser)](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/.travis.yml "Version Support")
+
 # Server-Sent Events parser of Mastodon Streaming API in PHP
 
 This class simply parses the received lines from [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events) of the [Mastodon Streaming API](https://docs.joinmastodon.org/methods/timelines/streaming/) to JSON object string.
