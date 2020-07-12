@@ -1,6 +1,6 @@
 [![](https://travis-ci.org/KEINOS/Mastodon_StreamingAPI_Parser.svg?branch=master)](https://travis-ci.org/KEINOS/Mastodon_StreamingAPI_Parser "View Build Status on Travis")
-[![](https://coveralls.io/repos/github/Mastodon_StreamingAPI_Parser/badge.svg)](https://coveralls.io/github/Mastodon_StreamingAPI_Parser "Coverage Status")
-[![](https://img.shields.io/scrutinizer/quality/g/Mastodon_StreamingAPI_Parser/master)](https://scrutinizer-ci.com/g/KEINOS/Mastodon_StreamingAPI_Parser/master "Scrutinizer code quality")
+[![Coverage Status](https://coveralls.io/repos/github/KEINOS/Mastodon_StreamingAPI_Parser/badge.svg?branch=%28HEAD+detached+at+a22260d%29)](https://coveralls.io/github/KEINOS/Mastodon_StreamingAPI_Parser?branch=%28HEAD+detached+at+a22260d%29)
+[![](https://img.shields.io/scrutinizer/quality/g/KEINOS/Mastodon_StreamingAPI_Parser/master)](https://scrutinizer-ci.com/g/KEINOS/Mastodon_StreamingAPI_Parser/?branch=master "Code quality in Scrutinizer")
 [![](https://img.shields.io/packagist/php-v/keinos/mastodon-streaming-api-parser)](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/.travis.yml "Version Support")
 
 # Server-Sent Events parser of Mastodon Streaming API in PHP
