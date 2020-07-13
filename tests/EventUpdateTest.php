@@ -69,6 +69,30 @@ final class EventUpdateTest extends TestCase
         $this->assertFalse($result);
     }
 
+    public function testBadByteLengthInput()
+    {
+        $sample  = new Parser();
+
+        $event     = 'update';
+        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $length   = strlen($payload);
+        $data_stream = [
+            "event: ${event}",
+            "gggg",
+            "${payload}"
+        ];
+
+        // Buffer stream
+        foreach ($data_stream as $line) {
+            $result = $sample->parse(strval($line));
+            if (! empty($result)) {
+                $this->fail('Un-willing data returned. Data: ' . $result);
+            }
+        }
+        // Payload without "data:" pre-fix should return false
+        $this->assertFalse($result);
+    }
+
     public function testChunkedStringInput()
     {
         $sample  = new Parser();
