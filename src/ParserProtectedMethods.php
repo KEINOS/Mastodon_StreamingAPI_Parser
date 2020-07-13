@@ -36,7 +36,7 @@ class ParserProtectedMethods extends ParserStaticMethods
         }
 
         if ($this->isDataEndPayload($line)) {
-            $json = self::extractDataFromDatagram($this->buffer);
+            $json = self::extractDataFromString($this->buffer);
             $assoc_as_array = true; // JSON_OBJECT_AS_ARRAY
             $array = json_decode($json, $assoc_as_array);
             if (null === $array) {
@@ -97,7 +97,7 @@ class ParserProtectedMethods extends ParserStaticMethods
         return ($this->flagByteLen && $this->flagEventDelete);
     }
 
-    protected function ifFlagUpEventUpdate(): bool
+    protected function isFlagUpEventUpdate(): bool
     {
         return ($this->flagByteLen && $this->flagEventUpdate);
     }

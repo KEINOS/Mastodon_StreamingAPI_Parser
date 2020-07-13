@@ -6,7 +6,7 @@ namespace KEINOS\MSTDN_TOOLS;
 
 class ParserStaticMethods
 {
-    public static function extractDataFromDatagram(string $string): string
+    public static function extractDataFromString(string $string): string
     {
         return trim(self::getStringAfter('data: ', trim($string)));
     }
