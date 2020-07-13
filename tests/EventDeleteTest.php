@@ -6,14 +6,14 @@ namespace KEINOS\Tests;
 
 use KEINOS\MSTDN_TOOLS\Parser;
 
-final class ClassParserTest extends TestCase
+final class EventDeleteTest extends TestCase
 {
-    public function testStringInput()
+    public function testRegularInput()
     {
         $sample  = new Parser();
 
-        $event   = 'update';
-        $payload = json_encode(['foo' => 'bar']);
+        $event   = 'delete';
+        $payload = '12345';
         $length  = strlen('data: ' . $payload);
         $data_stream = [
             "event: ${event}",
@@ -32,16 +32,8 @@ final class ClassParserTest extends TestCase
         $actual = json_decode($result, true);
         $expect = [
             'event' => $event,
-            'payload' => json_decode($payload, true)
+            'payload' => $payload,
         ];
         $this->assertSame($expect, $actual);
-    }
-
-    public function testArrayInput()
-    {
-        $sample = new Parser();
-
-        $this->expectException(\TypeError::class);
-        $actual = $sample->parse(array());
     }
 }
