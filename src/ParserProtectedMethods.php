@@ -73,24 +73,31 @@ class ParserProtectedMethods extends ParserStaticMethods
             return true;
         }
 
-        if (self::isEvent($line) && self::isEventDelete($line)) {
-            // Reset other flags when new event begin
-            $this->setFlagUpEventUpdate(false);
-            $this->clearBuffer();
+        return self::isFlagUpAsEvent($line);
+    }
 
+    protected function isFlagUpAsEvent(string $line): bool
+    {
+        if (! self::isEvent($line)) {
+            return false;
+        }
+
+        // Reset flags when new event begin
+        $this->setFlagUpEventUpdate(false);
+        $this->setFlagUpEventDelete(false);
+        $this->clearBuffer();
+
+        if (self::isEventDelete($line)) {
             $this->setFlagUpEventDelete(true);
             return true;
         }
 
-        if (self::isEvent($line) && self::isEventUpdate($line)) {
-            // Reset other flags when new event begin
-            $this->setFlagUpEventDelete(false);
-            $this->clearBuffer();
-
+        if (self::isEventUpdate($line)) {
             $this->setFlagUpEventUpdate(true);
             return true;
         }
 
+        // Unsupported flag
         return false;
     }
 
