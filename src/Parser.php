@@ -26,9 +26,7 @@ final class Parser extends ParserProtectedMethods implements ParserInterface, Pa
         }
 
         if ($this->isFlagUpEventUpdate()) {
-            $payload_array = $this->bufferPayloadUpdate($line);
-
-            if (false !== $payload_array) {
+            if (false !== $payload_array = $this->bufferPayloadUpdate($line)) {
                 $this->resetFlags();
                 $this->clearBuffer();
 
