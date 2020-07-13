@@ -73,7 +73,7 @@ class ParserProtectedMethods extends ParserStaticMethods
             return true;
         }
 
-        return self::isFlagUpAsEvent($line);
+        return $this->isFlagUpAsEvent($line);
     }
 
     protected function isFlagUpAsEvent(string $line): bool
