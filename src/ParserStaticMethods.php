@@ -50,12 +50,6 @@ class ParserStaticMethods
         return true;
     }
 
-    public static function isData(string $haystack): bool
-    {
-        $needle = 'data: ';
-        return $needle === substr(trim($haystack), 0, strlen($needle));
-    }
-
     public static function isDataBeginPayload(string $haystack): bool
     {
         $needle = 'data: {';
@@ -92,12 +86,5 @@ class ParserStaticMethods
     public static function isThump(string $string): bool
     {
         return ':thump' === trim($string);
-    }
-
-    public static function reEncodeJsonPretty(string $string): string
-    {
-        $options = JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
-
-        return json_encode(json_decode($string), $options) ?: '';
     }
 }
