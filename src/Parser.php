@@ -12,22 +12,20 @@ final class Parser extends ParserProtectedMethods implements ParserInterface, Pa
             return false; // Return false to skip further process
         }
 
-        if ($this->isFlagUpEventDelete()) {
-            if (self::isDataTootId($line)) {
-                $id_toot = trim(str_replace('data:', '', $line));
+        if ($this->isFlagUpEventDelete() && self::isDataTootId($line)) {
+            $id_toot = self::extractDataFromString($line);
 
-                $this->resetFlags();
-                $this->clearBuffer();
+            $this->resetFlags();
+            $this->clearBuffer();
 
-                $result = json_encode([
+            $result = json_encode([
                     'event'   => 'delete',
                     'payload' => "${id_toot}"
-                ]);
-                return $result;
-            }
+            ]);
+            return $result;
         }
 
-        if ($this->ifFlagUpEventUpdate()) {
+        if ($this->isFlagUpEventUpdate()) {
             $payload_array = $this->bufferPayloadUpdate($line);
 
             if (false !== $payload_array) {
