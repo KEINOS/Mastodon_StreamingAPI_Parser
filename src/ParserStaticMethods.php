@@ -6,9 +6,16 @@ namespace KEINOS\MSTDN_TOOLS;
 
 class ParserStaticMethods
 {
-    public static function extractDataFromString(string $string): string
+    /**
+     * extractDataFromString
+     *
+     * @param  string $string
+     * @return bool|string
+     */
+    public static function extractDataFromString(string $string)
     {
-        return trim(self::getStringAfter('data: ', trim($string)));
+        $result = trim(self::getStringAfter('data: ', trim($string)));
+        return ($result === trim($string)) ? false : $result;
     }
 
     public static function getStringAfter(string $needle, string $haystack): string
