@@ -20,9 +20,9 @@ final class EventUpdateTest extends TestCase
     {
         $sample  = new Parser();
 
-        $event     = 'update';
-        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
-        $length   = strlen($payload);
+        $event   = 'update';
+        $payload = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $length  = strlen($payload);
         $data_stream = [
             "event: ${event}",
             "gggg",
@@ -62,7 +62,7 @@ final class EventUpdateTest extends TestCase
     {
         $sample  = new Parser();
 
-        $event     = 'update';
+        $event    = 'update';
         $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo}}'; // Missing quote
         $payloads = str_split($payload, (intdiv(strlen($payload), 2)) + 1);
         $length   = strlen('data: ' . $payloads[0]);
@@ -150,9 +150,9 @@ final class EventUpdateTest extends TestCase
     {
         $sample  = new Parser();
 
-        $event     = 'update';
-        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
-        $length   = strlen($payload);
+        $event   = 'update';
+        $payload = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $length  = strlen($payload);
         $data_stream = [
             "event: ${event}",
             $length,
@@ -174,9 +174,9 @@ final class EventUpdateTest extends TestCase
     {
         $sample  = new Parser();
 
-        $event     = 'update';
-        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
-        $length   = strlen('data: ' . $payload);
+        $event   = 'update';
+        $payload = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $length  = strlen('data: ' . $payload);
         $data_stream = [
             "event: ${event}",
             $length,
@@ -203,9 +203,9 @@ final class EventUpdateTest extends TestCase
     {
         $sample  = new Parser();
 
-        $event    = 'update';
-        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
-        $length   = strlen('data: ' . $payload);
+        $event   = 'update';
+        $payload = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $length  = strlen('data: ' . $payload);
         $data_stream = [
             "event: ${event}",
             $length,
@@ -241,6 +241,29 @@ final class EventUpdateTest extends TestCase
             $result = $sample->parse(strval($line));
             if (! empty($result)) {
                 $this->fail('Un-willing data returned. Data: ' . $result);
+            }
+        }
+        $this->assertFalse($result);
+    }
+
+    public function testUnsupportedEvent()
+    {
+        $sample  = new Parser();
+
+        $event    = 'unknown';
+        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $length   = strlen('data: ' . $payload);
+        $data_stream = [
+            "event: ${event}",
+            $length,
+            "data: ${payload}"
+        ];
+
+        // Buffer stream
+        foreach ($data_stream as $line) {
+            $result = $sample->parse(strval($line));
+            if (empty($result)) {
+                continue;
             }
         }
         $this->assertFalse($result);
