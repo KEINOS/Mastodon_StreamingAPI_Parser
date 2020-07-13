@@ -16,13 +16,114 @@ final class EventUpdateTest extends TestCase
         $actual = $sample->parse(array());
     }
 
-    public function testStringInput()
+    public function testBadByteLengthInput()
     {
         $sample  = new Parser();
 
         $event     = 'update';
-        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyopiyo"}}';
-        $length   = strlen('data: ' . $payload);
+        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $length   = strlen($payload);
+        $data_stream = [
+            "event: ${event}",
+            "gggg",
+            "${payload}"
+        ];
+
+        // Buffer stream
+        foreach ($data_stream as $line) {
+            $result = $sample->parse(strval($line));
+            if (! empty($result)) {
+                $this->fail('Un-willing data returned. Data: ' . $result);
+            }
+        }
+        // Payload without "data:" pre-fix should return false
+        $this->assertFalse($result);
+    }
+
+    public function testBlankInput()
+    {
+        $sample  = new Parser();
+
+        $data_stream = [
+            '',
+            "\r\n",
+            "\n",
+            ' '
+        ];
+
+        // Buffer stream
+        foreach ($data_stream as $line) {
+            $result = $sample->parse(strval($line));
+            $this->assertFalse($result, "Blank lines should return false. Data: ${result}");
+        }
+    }
+
+    public function testBrokenChunkedStringInput()
+    {
+        $sample  = new Parser();
+
+        $event     = 'update';
+        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo}}'; // Missing quote
+        $payloads = str_split($payload, (intdiv(strlen($payload), 2)) + 1);
+        $length   = strlen('data: ' . $payloads[0]);
+        $data_stream = [
+            "event: ${event}",
+            $length,
+            "data: ${payload}"
+        ];
+
+        // Buffer stream
+        foreach ($data_stream as $line) {
+            $result = $sample->parse(strval($line));
+            if (! empty($result)) {
+                $this->fail('Un-willing data returned. Data: ' . $result);
+            }
+        }
+        $this->assertFalse($result);
+    }
+
+    public function testChunkedInThreeStringInput()
+    {
+        $sample  = new Parser();
+
+        $event    = 'update';
+        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $payloads = str_split($payload, (intdiv(strlen($payload), 3)) + 1); // Chunk into 2 peases
+        $length   = strlen('data: ' . $payloads[0]);
+        $data_stream = [
+            "event: ${event}",
+            strlen('data: ' . $payloads[0]),
+            "data: ${payloads[0]}",
+            strlen($payloads[1]),
+            "${payloads[1]}",
+            strlen($payloads[2]),
+            "${payloads[2]}",
+        ];
+
+        // Buffer stream
+        foreach ($data_stream as $line) {
+            $result = $sample->parse(strval($line));
+            if (empty($result)) {
+                continue;
+            }
+        }
+
+        $actual = json_decode($result, true);
+        $expect = [
+            'event' => $event,
+            'payload' => json_decode($payload, true)
+        ];
+        $this->assertSame($expect, $actual);
+    }
+
+    public function testChunkedInTwoStringInput()
+    {
+        $sample  = new Parser();
+
+        $event    = 'update';
+        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $payloads = str_split($payload, (intdiv(strlen($payload), 2)) + 1); // Chunk into 2 peases
+        $length   = strlen('data: ' . $payloads[0]);
         $data_stream = [
             "event: ${event}",
             $length,
@@ -69,38 +170,13 @@ final class EventUpdateTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testBadByteLengthInput()
+    public function testStringInput()
     {
         $sample  = new Parser();
 
         $event     = 'update';
         $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
-        $length   = strlen($payload);
-        $data_stream = [
-            "event: ${event}",
-            "gggg",
-            "${payload}"
-        ];
-
-        // Buffer stream
-        foreach ($data_stream as $line) {
-            $result = $sample->parse(strval($line));
-            if (! empty($result)) {
-                $this->fail('Un-willing data returned. Data: ' . $result);
-            }
-        }
-        // Payload without "data:" pre-fix should return false
-        $this->assertFalse($result);
-    }
-
-    public function testChunkedInTwoStringInput()
-    {
-        $sample  = new Parser();
-
-        $event    = 'update';
-        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
-        $payloads = str_split($payload, (intdiv(strlen($payload), 2)) + 1); // Chunk into 2 peases
-        $length   = strlen('data: ' . $payloads[0]);
+        $length   = strlen('data: ' . $payload);
         $data_stream = [
             "event: ${event}",
             $length,
@@ -123,62 +199,26 @@ final class EventUpdateTest extends TestCase
         $this->assertSame($expect, $actual);
     }
 
-    public function testChunkedInThreeStringInput()
+    public function testThumpInput()
     {
         $sample  = new Parser();
 
         $event    = 'update';
         $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
-        $payloads = str_split($payload, (intdiv(strlen($payload), 3)) + 1); // Chunk into 2 peases
-        $length   = strlen('data: ' . $payloads[0]);
-        $data_stream = [
-            "event: ${event}",
-            strlen('data: ' . $payloads[0]),
-            "data: ${payloads[0]}",
-            strlen($payloads[1]),
-            "${payloads[1]}",
-            strlen($payloads[2]),
-            "${payloads[2]}",
-        ];
-
-        // Buffer stream
-        foreach ($data_stream as $line) {
-            $result = $sample->parse(strval($line));
-            if (empty($result)) {
-                continue;
-            }
-        }
-
-        $actual = json_decode($result, true);
-        $expect = [
-            'event' => $event,
-            'payload' => json_decode($payload, true)
-        ];
-        $this->assertSame($expect, $actual);
-    }
-
-    public function testBrokenChunkedStringInput()
-    {
-        $sample  = new Parser();
-
-        $event     = 'update';
-        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo}}'; // Missing quote
-        $payloads = str_split($payload, (intdiv(strlen($payload), 2)) + 1);
-        $length   = strlen('data: ' . $payloads[0]);
+        $length   = strlen('data: ' . $payload);
         $data_stream = [
             "event: ${event}",
             $length,
-            "data: ${payload}"
+            "data: ${payload}",
+            ":thump",
         ];
 
         // Buffer stream
         foreach ($data_stream as $line) {
             $result = $sample->parse(strval($line));
-            if (! empty($result)) {
-                $this->fail('Un-willing data returned. Data: ' . $result);
-            }
         }
-        $this->assertFalse($result);
+
+        $this->assertFalse($result, "':thump' should return false. Data: ${result}");
     }
 
     public function testUncompletedInput()
