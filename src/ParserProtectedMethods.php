@@ -64,11 +64,7 @@ class ParserProtectedMethods extends ParserStaticMethods
 
     protected function isSkippable(string $line): bool
     {
-        if (self::isBlank($line)) {
-            return true;
-        }
-
-        if (self::isThump($line)) {
+        if (self::isBlank($line) || self::isThump($line)) {
             return true;
         }
 
@@ -77,19 +73,20 @@ class ParserProtectedMethods extends ParserStaticMethods
             return true;
         }
 
-        // Reset the flags when events begin
-        if (self::isEvent($line)) {
-            $this->setFlagUpEventDelete(false);
+        if (self::isEvent($line) && self::isEventDelete($line)) {
+            // Reset other flags when new event begin
             $this->setFlagUpEventUpdate(false);
             $this->clearBuffer();
-        }
 
-        if (self::isEventDelete($line)) {
             $this->setFlagUpEventDelete(true);
             return true;
         }
 
-        if (self::isEventUpdate($line)) {
+        if (self::isEvent($line) && self::isEventUpdate($line)) {
+            // Reset other flags when new event begin
+            $this->setFlagUpEventDelete(false);
+            $this->clearBuffer();
+
             $this->setFlagUpEventUpdate(true);
             return true;
         }

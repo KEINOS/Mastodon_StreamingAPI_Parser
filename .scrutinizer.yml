@@ -1,7 +1,9 @@
 build:
   nodes:
     analysis:
+      project_setup:
+        override: true
       tests:
         override:
-          - php-scrutinizer-run --sub-project-dir=src/
+          - php-scrutinizer-run --sub-project-dir=src/ --enable-security-analysis
           - phpcs-run --standard=.phpcs.xml
