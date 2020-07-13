@@ -93,7 +93,7 @@ final class EventUpdateTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testChunkedStringInput()
+    public function testChunkedInTwoStringInput()
     {
         $sample  = new Parser();
 
@@ -105,6 +105,40 @@ final class EventUpdateTest extends TestCase
             "event: ${event}",
             $length,
             "data: ${payload}"
+        ];
+
+        // Buffer stream
+        foreach ($data_stream as $line) {
+            $result = $sample->parse(strval($line));
+            if (empty($result)) {
+                continue;
+            }
+        }
+
+        $actual = json_decode($result, true);
+        $expect = [
+            'event' => $event,
+            'payload' => json_decode($payload, true)
+        ];
+        $this->assertSame($expect, $actual);
+    }
+
+    public function testChunkedInThreeStringInput()
+    {
+        $sample  = new Parser();
+
+        $event    = 'update';
+        $payload  = '{"foo":"bar","hoge":"fuga","buz":{"piyo":"piyo piyo"}}';
+        $payloads = str_split($payload, (intdiv(strlen($payload), 3)) + 1); // Chunk into 2 peases
+        $length   = strlen('data: ' . $payloads[0]);
+        $data_stream = [
+            "event: ${event}",
+            strlen('data: ' . $payloads[0]),
+            "data: ${payloads[0]}",
+            strlen($payloads[1]),
+            "${payloads[1]}",
+            strlen($payloads[2]),
+            "${payloads[2]}",
         ];
 
         // Buffer stream
