@@ -7,6 +7,8 @@
 
 This class simply parses the received lines from [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events) of the [Mastodon Streaming API](https://docs.joinmastodon.org/methods/timelines/streaming/) to JSON object string.
 
+The below lines (server-sent event messages) will be parsed in JSON and nothing more.
+
 ```text
 b59
 event: update
@@ -15,7 +17,22 @@ data: {"id":"104 ... <span cla
 ss=\"invisible\"> ... ,"mojis":[]}
 ```
 
-The above lines (server-sent event messages) will be parsed in JSON as below and nothing more.
+↓
+
+```php
+$parser = new \KEINOS\MSTDN_TOOLS\Parser();
+
+while (! feof($stream)) {
+    $line = fgets($stream);
+    $json = $parser->parse($line);
+    if (false === $json) {
+        continue;
+    }
+    echo $json . PHP_EOL;
+}
+```
+
+↓
 
 ```json
 {"event":"update","payload":{"id":"104 ... <span class=\"invisible\"> ... ,"emojis":[]}}
@@ -30,6 +47,8 @@ Use this class if you are receiving the streaming signal directly from Mastodon 
     ```bash
     composer require keinos/mastodon-streaming-api-parser
     ```
+
+    - <sup>NOTE: The above package **contains only the minimum files to use**. To get all the files including tests and samples specify `keinos/mastodon-streaming-api-parser:dev-master` or clone the repo for development.</sup>
 
 - Instantiate
 
