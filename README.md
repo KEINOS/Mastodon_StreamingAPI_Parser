@@ -110,3 +110,13 @@ Use this class if you are receiving the streaming signal directly from Mastodon 
 
 - PHP ^7.1 || ^8.0
 - Available [event types](https://docs.joinmastodon.org/methods/timelines/streaming/#event-types-a-idevent-typesa) to detect: `update` and `delete`
+
+## Contribution
+
+- Issues: https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/issues
+  - If the issue is a bug, then please provide a simple example that are reproducible.
+  - If the issue is a feature request, then also provide a simple example with the results you wish, so we can create a test before implementing your feature.
+- PR (Pull Request)
+  - Please PR to the `padawan` branch. After the CI tests and reviews, then merged to `master` branch it will ;-)
+- Rules
+  - Be happy, be safe, stay safe.
