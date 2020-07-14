@@ -10,11 +10,11 @@ This class simply parses the received lines from [server-sent events](https://de
 The below lines (server-sent event messages) will be parsed in JSON and nothing more.
 
 ```text
-b59
+5b1
 event: update
-data: {"id":"104 ... <span cla
-274
-ss=\"invisible\"> ... ,"mojis":[]}
+data: {"id":"10000 ... visible\">0FS8QET2TT</span></a><br><a hr
+350
+ef=\"https://www ... ts":[],"mentions":[],"tags":[],"emojis":[]}
 ```
 
 ↓
@@ -35,7 +35,7 @@ while (! feof($stream)) {
 ↓
 
 ```json
-{"event":"update","payload":{"id":"104 ... <span class=\"invisible\"> ... ,"emojis":[]}}
+{"event":"update","payload":{"id":"10000 ... visible\">0FS8QET2TT<\/span><\/a><br><a href=\"https:\/\/www .... ts":[],"mentions":[],"tags":[],"emojis":[]}}
 ```
 
 Use this class if you are receiving the streaming signal directly from Mastodon Streaming API via socket connection, rather than WebSocket which requires an access token when upgrading the protocol.
