@@ -28,7 +28,7 @@ Use this class if you are receiving the streaming signal directly from Mastodon 
 - Install (via composer)
 
     ```bash
-    composer require keinos/keinos/mastodon-streaming-api-parser
+    composer require keinos/mastodon-streaming-api-parser
     ```
 
 - Instantiate
