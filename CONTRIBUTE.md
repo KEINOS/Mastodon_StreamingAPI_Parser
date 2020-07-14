@@ -4,6 +4,10 @@ Any contribution are welcome.
 
 You can develop in any way you want but the PR (pull request) must pass the tests before review/merge.
 
+## Branch to PR
+
+- `padawan`: Please do not PR to `master` branch.
+
 ## Tests required to pass
 
 - Diagnosis: `composer diagnose`
@@ -25,26 +29,26 @@ You can develop in any way you want but the PR (pull request) must pass the test
 ├── src/
 │   ├── Parser.php ................... The main class.
 │   ├── ParserProtectedMethods.php ... Place the protected methods here. Parent
-│   │                                    class of "Parser".
+│   │                                  class of "Parser".
 │   ├── ParserStaticMethods.php ...... Place the static methods here. Parent class
-│   │                                    of "ParserProtectedMethods".
+│   │                                  of "ParserProtectedMethods".
 │   └── interfaces/
 │        ├── ParserConstants.php ..... Define here the class constants here.
 │        └── ParserInterface.php ..... Define the public methods of "Parser" class
-│                                         here.
-├── tests/ ............................ Place the PHPUnit tests here.
+│                                      here.
+├── tests/ ........................... Place the PHPUnit tests here.
 │   ├── ParserTest.php
 │   ├── ...
 │   │
 │   ├── * conf ....................... Configuration files of the tests.
 │   └── * run-tests.sh ............... Test runner script.
-├── samples/ ................ Sample usage of the class.
+├── samples/ ......................... Sample usage of the class.
 │   └── Main.php
 ├── bench/
-│   └── HashBench.php ..... Sample of benchmark. Create one if you want to compare
-│                              methods or functions' speed, if you wander which
-│                              implementation is better. Don't forget that readable is
-│                              better than faster in this repo.
+│   └── HashBench.php ...... Sample of benchmark. Create one if you want to compare
+│                            methods or functions' speed, if you wander which
+│                            implementation is better. Don't forget that readable is
+│                            better than faster in this repo.
 │
 ├── * .dockerignore ........ Dir/files to ignore including to the containers.
 ├── * .gitattributes ....... Dir/files to ignore including to the composer packages.
@@ -53,12 +57,11 @@ You can develop in any way you want but the PR (pull request) must pass the test
 ├── * .scrutinizer.yml ..... Config file of Scrutinizer for code quality check.
 ├── * .travis.yml .......... Config file of Travis-CI for testing on other PHP versions.
 ├── * CONTRIBUTE.md ........ This file.
-├── * Dockerfile ........... Sample Docker container to run the script in./samples/
-│                              on  PHP8-alpha.
+├── * Dockerfile ........... Sample Docker container to run the script in./samples/ on
+│                            PHP8-alpha.
 ├── * composer.json ........ Composer config file.
 ├── * composer.lock ........ Do not commit this file.
 ├── * docker-compose.yml ... Used for Docker and docker-compose user.
-│                              directory.
 ├── * LICENSE .............. MIT license.
 ├── * README.md ............ The main README.
 │
@@ -68,16 +71,16 @@ You can develop in any way you want but the PR (pull request) must pass the test
 ├── * bin/ ................. Phar archived file will be placed here. Mostly not used.
 ├── * report/ .............. Coverage reports from PHPUnit will be placed here.
 └── * vendor/ .............. Composer vendor directory. It will be created by
-                                composer. Don't commit this dir as well.
+                             composer. Don't commit this dir as well.
 ```
 
 </div></details>
 
-## Develop
+## Develop/Debug
 
 This repo provides several ways to run the tests before PR.
 
-### Develop on local (Ordinary way)
+### Develop on local (The ordinary way)
 
 - Installed in local
   - PHP ^7.1, `composer`
@@ -91,7 +94,7 @@ composer test local all
 
 - Note: For Windows10 users it is recommended to develop via WSL2
 
-### Recommended
+### Recommended development
 
 - Installed in local
   - VS Code, `remote-containers` (VS Code Extension) and Docker
@@ -106,7 +109,7 @@ Open a new terminal in VS Code then run the below command to run the tests.
 composer test all verbose
 ```
 
-### Docker + docker-compose User (No PHP)
+### Develop via Docker + docker-compose (No PHP in local env)
 
 - Installed in local
   - Docker and `docker-compose` (no PHP)
@@ -114,11 +117,11 @@ composer test all verbose
 In your terminal run:
 
 ```bash
-docker-compose run --entrypoint='/bin/sh' --workdir='/app' -v $(pwd):/app dev
+docker-compose run --rm --entrypoint='/bin/sh' --workdir='/app' -v $(pwd):/app dev
 ```
 
 Then run the tests inside the container.
 
 ```bash
-composer test all
+composer test all verbose
 ```

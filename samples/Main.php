@@ -1,11 +1,7 @@
 <?php
 
 /**
- * Main script.
- *
- * Overly-Cautious Development of Hello World!.
- *
- * @standard PSR2
+ * Sample of Receiving server-sent messages from Mastodon API as JSON objects.
  */
 
 declare(strict_types=1);
@@ -19,7 +15,10 @@ const URL_API_STREAM_PUBLIC = '/api/v1/streaming/public';
 const URL_API_STREAM_LOCAL  = '/api/v1/streaming/public/local';
 const CRLF = "\r\n";
 
-// Open socket to the Mastodon server
+// Open socket to the Mastodon server's streaming API port. You can get these
+// info by accessing to your Mastodon API's "instance" endpoint.
+//   Endpoint: /api/v1/instance
+//   Ex: https://qiitadon.com/api/v1/instance
 $hostname = 'ssl://streaming.qiitadon.com';
 $port     = 4000;
 $timeout  = 5; //sec
@@ -33,9 +32,9 @@ if (! $fp) {
 
 // Prepare request header
 $method     = 'GET';
-$endpoint   = URL_API_STREAM_PUBLIC; // For LTL: URL_API_STREAM_LOCAL
-$host       = 'qiitadon.com'; //streaming.qiitadon.con でない
-$user_agent = 'qithub-bot';
+$endpoint   = URL_API_STREAM_PUBLIC; // For LTL use: URL_API_STREAM_LOCAL
+$host       = 'qiitadon.com'; // Your instance's host name
+$user_agent = 'qithub-bot';   // Your app name
 $req = [
     "{$method} {$endpoint} HTTP/1.1",
     "Host: {$host}",
