@@ -16,7 +16,7 @@ const URL_API_STREAM_LOCAL  = '/api/v1/streaming/public/local';
 const CRLF = "\r\n";
 
 // Open socket to the Mastodon server's streaming API port. You can get these
-// info by accessing to your Mastodon API's  `instance` endpoint.
+// info by accessing to your Mastodon API's "instance" endpoint.
 //   Endpoint: /api/v1/instance
 //   Ex: https://qiitadon.com/api/v1/instance
 $hostname = 'ssl://streaming.qiitadon.com';
