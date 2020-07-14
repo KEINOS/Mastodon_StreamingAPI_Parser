@@ -19,7 +19,8 @@
     ],
     "support": {
         "issues": "https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/issues",
-        "source": "https://github.com/KEINOS/Mastodon_StreamingAPI_Parser"
+        "source": "https://github.com/KEINOS/Mastodon_StreamingAPI_Parser",
+        "usage": "https://github.com/KEINOS/Mastodon_StreamingAPI_Parser"
     },
     "require": {
         "php": "^8.0 || ^7.1",
