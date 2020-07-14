@@ -30,9 +30,9 @@ class ParserProtectedMethods extends ParserStaticMethods
     protected function bufferPayloadUpdate(string $line)
     {
         if (self::isDataBeginPayload($line)) {
-            $this->buffer = trim($line);
+            $this->buffer = self::trimEOL($line);
         } else {
-            $this->buffer .= trim($line);
+            $this->buffer .= self::trimEOL($line);
         }
 
         if ($this->isDataEndPayload($line)) {
