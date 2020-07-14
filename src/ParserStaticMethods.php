@@ -6,6 +6,11 @@ namespace KEINOS\MSTDN_TOOLS;
 
 class ParserStaticMethods
 {
+    public static function convertEOL(string $string, string $to = "\n"): string
+    {
+        return strtr($string, array_fill_keys(array("\r\n", "\r", "\n"), $to));
+    }
+
     /**
      * extractDataFromString
      *
@@ -14,7 +19,8 @@ class ParserStaticMethods
      */
     public static function extractDataFromString(string $string)
     {
-        $result = trim(self::getStringAfter('data: ', trim($string)));
+        $result = self::trimEOL(self::getStringAfter('data: ', $string));
+
         return ($result === trim($string)) ? false : $result;
     }
 
@@ -25,6 +31,7 @@ class ParserStaticMethods
         if (false === $pos_needle) {
             return $haystack;
         }
+
         return substr($haystack, $pos_needle + strlen($needle));
     }
 
@@ -35,7 +42,8 @@ class ParserStaticMethods
 
     public static function isByteLenOfPayload(string $string): bool
     {
-        $len_min = 5; // data length string given is max FFF + CR + LF = 5 bytes
+        // data length string given is greater than FFF + CR + LF = 5 bytes
+        $len_min = 5;
 
         if ($len_min < strlen($string)) {
             return false;
@@ -53,13 +61,15 @@ class ParserStaticMethods
     public static function isDataBeginPayload(string $haystack): bool
     {
         $needle = 'data: {';
+
         return $needle === substr(trim($haystack), 0, strlen($needle));
     }
 
-    public static function isDataEndPayload(string $string): bool
+    public static function isDataEndPayload(string $haystack): bool
     {
-        $key = '}';
-        return $key === substr(trim($string), strlen($key) * -1);
+        $needle = '}';
+
+        return $needle === substr(trim($haystack), strlen($needle) * -1);
     }
 
     public static function isDataTootId(string $string): bool
@@ -70,6 +80,7 @@ class ParserStaticMethods
     public static function isEvent(string $haystack): bool
     {
         $needle = 'event:';
+
         return $needle === substr(trim($haystack), 0, strlen($needle));
     }
 
@@ -86,5 +97,12 @@ class ParserStaticMethods
     public static function isThump(string $string): bool
     {
         return ':thump' === trim($string);
+    }
+
+    public static function trimEOL(string $string): string
+    {
+        $string = self::convertEOL($string);
+
+        return rtrim($string, "\n");
     }
 }
