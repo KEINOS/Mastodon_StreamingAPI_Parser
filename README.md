@@ -76,7 +76,7 @@ Use this class if you are receiving the streaming signal directly from Mastodon 
     }
     ```
 
-    - For the "`[Event name]`" and "`[Data of the event]`" see: [ParserInterface.php](./src/interfaces/ParserInterface.php])
+    - For the "`[Event name]`" and "`[Data of the event]`" see: [ParserInterface.php](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/src/interfaces/ParserInterface.php)
 
 - Sample
 
@@ -104,19 +104,23 @@ Use this class if you are receiving the streaming signal directly from Mastodon 
 
     ```
 
-    - Complete sample see: [./samples/Main.php](./samples/Main.php)
+    - Complete sample see: [./samples/Main.php](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/samples/Main.php)
 
-## Specifications
+## Specifications/Info
 
-- PHP ^7.1 || ^8.0
+- PHP: ^7.1 || ^8.0
 - Available [event types](https://docs.joinmastodon.org/methods/timelines/streaming/#event-types-a-idevent-typesa) to detect: `update` and `delete`
+- Source Code: [Mastodon_StreamingAPI_Parser](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser) @ GitHub
+- Package release: [keinos/mastodon-streaming-api-parser](https://packagist.org/packages/keinos/mastodon-streaming-api-parser) @ Packagist
 
 ## Contribution
 
-- Issues: https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/issues
+- Issues
+  - Throw an issue at: https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/issues
   - If the issue is a bug, then please provide a simple example that are reproducible.
   - If the issue is a feature request, then also provide a simple example with the results you wish, so we can create a test before implementing your feature.
 - PR (Pull Request)
-  - Please PR to the `padawan` branch. After the CI tests and reviews, then merged to `master` branch it will ;-)
+  - Please **PR to the `padawan` branch**. After the CI tests/reviews, then merged to `master` branch it will ;-)
+  - For more see: [CONTRIBUTE.md](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/CONTRIBUTE.md)
 - Rules
-  - Be happy, be safe, stay safe.
+  - Be nice, be happy and stay safe.
