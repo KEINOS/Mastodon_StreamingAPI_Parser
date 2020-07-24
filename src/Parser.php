@@ -20,7 +20,9 @@ final class Parser extends ParserProtectedMethods implements ParserInterface
 
             $result = json_encode([
                     'event'   => 'delete',
-                    'payload' => "${id_toot}"
+                    'payload' => [
+                        'id' => "${id_toot}"
+                    ],
             ]);
             return $result;
         }
