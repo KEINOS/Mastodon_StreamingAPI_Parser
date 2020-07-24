@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Sample of Receiving server-sent messages from Mastodon API as JSON objects.
+ * Sample of parsing the receiving server-sent messages from Mastodon API as JSON objects.
  */
 
 declare(strict_types=1);
 
-namespace KEINOS\MSTDN_TOOLS;
+namespace KEINOS\MSTDN_TOOLS\Parser;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -43,7 +43,7 @@ $req = [
 $req = implode($req, CRLF) . CRLF . CRLF; // The request must contain 2 extra blank lines
 
 // Prepare the streaming parser
-$parser = new \KEINOS\MSTDN_TOOLS\Parser();
+$parser = new \KEINOS\MSTDN_TOOLS\Parser\Parser();
 
 // Send GET request
 fwrite($fp, $req);
