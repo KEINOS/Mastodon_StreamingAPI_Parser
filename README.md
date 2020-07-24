@@ -7,7 +7,7 @@
 
 This class simply parses the received lines from [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events) of the [Mastodon Streaming API](https://docs.joinmastodon.org/methods/timelines/streaming/) to JSON object string.
 
-The below lines (server-sent event messages) will be parsed in JSON and nothing more.
+The below lines (server-sent event messages) will be parsed in JSON as below.
 
 ```text
 5b1
@@ -42,17 +42,15 @@ while (! feof($stream)) {
 
 Use this class if you are receiving the streaming signal directly from Mastodon Streaming API via socket connection, rather than WebSocket which requires an access token when upgrading the protocol.
 
+## Install
+
+```bash
+composer require keinos/mastodon-streaming-api-parser
+```
+
 ## Usage
 
-- Install (via composer)
-
-    ```bash
-    composer require keinos/mastodon-streaming-api-parser
-    ```
-
-    - <sup>NOTE: The above package **contains only the minimum files to use**. To get all the files including tests and samples specify `keinos/mastodon-streaming-api-parser:dev-master` or clone the repo for development.</sup>
-
-- Instantiate
+- Instantiation
 
     ```php
     $parser = new \KEINOS\MSTDN_TOOLS\Parser\Parser();
@@ -78,35 +76,35 @@ Use this class if you are receiving the streaming signal directly from Mastodon 
     }
     ```
 
-    - For the "`[Event name]`" and "`[Data of the event]`" see: [ParserInterface.php](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/src/interfaces/ParserInterface.php)
+- Interface: [ParserInterface.php](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/src/interfaces/ParserInterface.php)
 
-- Sample
+### Sample
 
-    ```php
-    // Instantiate the parser
-    $parser = new \KEINOS\MSTDN_TOOLS\Parser\Parser();
-    // Open socket
-    $fp = fsockopen($hostname, $port, $errno, $errstr, $timeout);
-    // Send GET request
-    fwrite($fp, $req);
-    // Looper
-    while (! feof($fp)) {
-        // Read the stream
-        $read = fgets($fp);
-        // Buffer each line until it returns the data
-        $json = $parser->parse($read);
-        if (false === $json) {
-            continue;
-        }
-        // Do something with the data
-        echo $json . PHP_EOL;
+```php
+// Instantiate the parser
+$parser = new \KEINOS\MSTDN_TOOLS\Parser\Parser();
+// Open socket
+$fp = fsockopen($hostname, $port, $errno, $errstr, $timeout);
+// Send GET request
+fwrite($fp, $req);
+// Looper
+while (! feof($fp)) {
+    // Read the stream
+    $read = fgets($fp);
+    // Buffer each line until it returns the data
+    $json = $parser->parse($read);
+    if (false === $json) {
+        continue;
     }
-    // Close connection
-    fclose($fp);
+    // Do something with the data
+    echo $json . PHP_EOL;
+}
+// Close connection
+fclose($fp);
 
-    ```
+```
 
-    - Complete sample see: [./samples/Main.php](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/samples/Main.php)
+- Complete sample see: [./samples/Main.php](https://github.com/KEINOS/Mastodon_StreamingAPI_Parser/blob/master/samples/Main.php)
 
 ## Specifications/Info
 
