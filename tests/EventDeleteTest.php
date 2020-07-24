@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace KEINOS\Tests;
 
-use KEINOS\MSTDN_TOOLS\Parser;
+use KEINOS\MSTDN_TOOLS\Parser\Parser;
 
 final class EventDeleteTest extends TestCase
 {

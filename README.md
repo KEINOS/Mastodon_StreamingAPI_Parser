@@ -20,7 +20,9 @@ ef=\"https://www ... ts":[],"mentions":[],"tags":[],"emojis":[]}
 ↓
 
 ```php
-$parser = new \KEINOS\MSTDN_TOOLS\Parser();
+use \KEINOS\MSTDN_TOOLS\Parser\Parser;
+
+$parser = new Parser();
 
 while (! feof($stream)) {
     $line = fgets($stream);
@@ -53,7 +55,7 @@ Use this class if you are receiving the streaming signal directly from Mastodon 
 - Instantiate
 
     ```php
-    $parser = new \KEINOS\MSTDN_TOOLS\Parser();
+    $parser = new \KEINOS\MSTDN_TOOLS\Parser\Parser();
     ```
 
 - Method
@@ -82,7 +84,7 @@ Use this class if you are receiving the streaming signal directly from Mastodon 
 
     ```php
     // Instantiate the parser
-    $parser = new \KEINOS\MSTDN_TOOLS\Parser();
+    $parser = new \KEINOS\MSTDN_TOOLS\Parser\Parser();
     // Open socket
     $fp = fsockopen($hostname, $port, $errno, $errstr, $timeout);
     // Send GET request

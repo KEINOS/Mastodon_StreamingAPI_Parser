@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace KEINOS\MSTDN_TOOLS;
+namespace KEINOS\MSTDN_TOOLS\Parser;
 
 class ParserStaticMethods
 {
