@@ -49,9 +49,8 @@
     },
     "autoload": {
         "psr-4": {
-            "KEINOS\\MSTDN_TOOLS\\": [
-                "src",
-                "src/interfaces"
+            "KEINOS\\MSTDN_TOOLS\\Parser\\": [
+                "src"
             ]
         }
     },

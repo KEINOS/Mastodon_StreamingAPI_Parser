@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace KEINOS\MSTDN_TOOLS;
+namespace KEINOS\MSTDN_TOOLS\Parser;
 
-final class Parser extends ParserProtectedMethods implements ParserInterface, ParserConstants
+final class Parser extends ParserProtectedMethods implements ParserInterface
 {
     public function parse(string $line)
     {
@@ -20,7 +20,9 @@ final class Parser extends ParserProtectedMethods implements ParserInterface, Pa
 
             $result = json_encode([
                     'event'   => 'delete',
-                    'payload' => "${id_toot}"
+                    'payload' => [
+                        'id' => "${id_toot}"
+                    ],
             ]);
             return $result;
         }

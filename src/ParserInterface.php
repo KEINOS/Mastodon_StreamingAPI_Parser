@@ -1,6 +1,6 @@
 <?php
 
-namespace KEINOS\MSTDN_TOOLS;
+namespace KEINOS\MSTDN_TOOLS\Parser;
 
 interface ParserInterface
 {
