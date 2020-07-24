@@ -29,10 +29,14 @@ final class EventDeleteTest extends TestCase
             }
         }
 
+        $data_payload = [
+            "id" => $payload
+        ];
+
         $actual = json_decode($result, true);
         $expect = [
             'event' => $event,
-            'payload' => $payload,
+            'payload' => $data_payload,
         ];
         $this->assertSame($expect, $actual);
     }
